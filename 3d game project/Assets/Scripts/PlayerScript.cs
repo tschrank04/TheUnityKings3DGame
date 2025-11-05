@@ -43,15 +43,23 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        Vector2 input = moveAction.ReadValue<Vector2>(); // x = left/right, y = up/down (W/S)
-        Vector3 localMove = new Vector3(input.x, 0f, input.y);
+        Vector2 input = moveAction.ReadValue<Vector2>(); // x = left/right, y = forward/back
+        Vector3 inputDir = new Vector3(input.x, 0f, input.y);
 
-        // Convert local movement to world space (so movement respects player rotation)
-        Vector3 worldMove = transform.TransformDirection(localMove);
+        // Normalize input so diagonal movement isn't faster
+        if (inputDir.sqrMagnitude > 1f)
+            inputDir.Normalize();
 
-        // Move character
-        controller.Move(worldMove * (moveSpeed * Time.deltaTime));
+        // Move relative to world (no rotation influence)
+        Vector3 move = inputDir * moveSpeed * Time.deltaTime;
+        controller.Move(move);
 
-        controller.Move(velocity * Time.deltaTime);
+        // Only rotate if actually moving
+        Vector3 horizontalVelocity = new Vector3(controller.velocity.x, 0f, controller.velocity.z);
+        if (horizontalVelocity.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(horizontalVelocity, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+        }
     }
 }
