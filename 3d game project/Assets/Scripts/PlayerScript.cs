@@ -86,7 +86,7 @@ public class PlayerScript : MonoBehaviour
             // Only consume if object is small enough
             if (obj.massValue <= playerMass)
             {
-                float massGain = obj.massValue * 0.25f; // smaller incremental gain
+                float massGain = obj.massValue * 0.40f; // smaller incremental gain
                 obj.OnConsumed();
 
                 // Stop previous animations to prevent stacking
