@@ -1330,7 +1330,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Use WASD to move. Run into another object to eat it.
+  m_text: Use WASD to move. Run into another object to eat it. Press P to pause.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: adf52fa9dce28934aaab88bc6f3de0cb, type: 2}
   m_sharedMaterial: {fileID: 6496220312275631191, guid: adf52fa9dce28934aaab88bc6f3de0cb, type: 2}
